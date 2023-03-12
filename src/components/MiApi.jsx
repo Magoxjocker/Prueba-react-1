@@ -20,8 +20,8 @@ const MiApi = () => {
 
 
   return (
-    <div>
-      {dataMiApi.map(personajes =><Cards key={personajes.id} personajes={personajes}/> )}
+    <div className='container-cards'>
+      {dataMiApi.map(personaje =><Cards key={personaje.id} personaje={personaje}/> )}
     </div>
   )
   }
