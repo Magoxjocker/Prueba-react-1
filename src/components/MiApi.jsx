@@ -3,28 +3,40 @@ import Cards from './Cards'
 
 
 
-const urlApi = 'https://rickandmortyapi.com/api/character'
+const urlApi = 'https://rickandmortyapi.com/api/character?page=1'
 
 const MiApi = () => {
-  const [dataMiApi, setDataMiApi] = useState ([])
+  const [dataMiApi, setDataMiApi] = useState([])
+  const [datafilter, setDatafilter] = useState([])
 
-  useEffect(()=>{
+  useEffect(() => {
     getRickandMorty()
-  },[])
-   
-    const getRickandMorty = async()=>{
-        const response = await fetch (urlApi)
-        const data = await response.json()
-        setDataMiApi(data.results)
-    }
+  }, [])
 
+  const getRickandMorty = async () => {
+    const response = await fetch(urlApi)
+    const data = await response.json()
+    setDataMiApi(data.results)
+  }
+
+  const buscar = async (text) => {
+    console.log(text.target.value)
+    let datafilter = dataMiApi.filter(personajes=>personajes.name.toLowerCase().includes(text.target.value.toLowerCase()))
+    setDatafilter(datafilter ? datafilter : dataMiApi)
+    console.log (dataMiApi.filter(personajes=>personajes.name.toLowerCase().includes(text.target.value.toLowerCase())))
+  }
 
   return (
-    <div className='container-cards'>
-      {dataMiApi.map(personaje =><Cards key={personaje.id} personaje={personaje}/> )}
+    <div >
+      <input name='Busqueda' className='buscador' type="text" placeholder='Buscame aquí' onChange={buscar} />
+      <div className='container-cards'>
+        {datafilter.map(personaje => <Cards key={personaje.id} personaje={personaje} />)}
+        {datafilter.length === 0 && <p>Sin Resultados</p>}
+      </div>
     </div>
+
   )
-  }
+}
 
 
 export default MiApi
