@@ -16,15 +16,17 @@ const MiApi = () => {
   const getRickandMorty = async () => {
     const response = await fetch(urlApi)
     const data = await response.json()
-    setDataMiApi(data.results)
-    setDatafilter(data.results)
+    let dataorder = data.results.sort((a, b) => {
+      return (a.name < b.name) ? -1 : (a.name > b.name) ? 1 : 0;
+    })
+    setDataMiApi(dataorder)
+    setDatafilter(dataorder)
   }
 
 
   /*BUSCADOR: FUNCION QUE LEE EL TEXTO DEL IMPUT*/
   const buscar = async (text) => {
-    let datafilter = dataMiApi.filter(personajes=>personajes.name.toLowerCase().includes(text.target.value.toLowerCase()))
-    console.log(datafilter)
+    let datafilter = dataMiApi.filter(personajes => personajes.name.toLowerCase().includes(text.target.value.toLowerCase()))
     setDatafilter(datafilter ? datafilter : dataMiApi)
   }
 
