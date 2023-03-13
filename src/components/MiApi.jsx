@@ -17,13 +17,15 @@ const MiApi = () => {
     const response = await fetch(urlApi)
     const data = await response.json()
     setDataMiApi(data.results)
+    setDatafilter(data.results)
   }
 
+
+  /*BUSCADOR: FUNCION QUE LEE EL TEXTO DEL IMPUT*/
   const buscar = async (text) => {
-    console.log(text.target.value)
     let datafilter = dataMiApi.filter(personajes=>personajes.name.toLowerCase().includes(text.target.value.toLowerCase()))
+    console.log(datafilter)
     setDatafilter(datafilter ? datafilter : dataMiApi)
-    console.log (dataMiApi.filter(personajes=>personajes.name.toLowerCase().includes(text.target.value.toLowerCase())))
   }
 
   return (
